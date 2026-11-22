@@ -88,11 +88,12 @@ class Apple(GameObject):
         что она не совпадает с занятыми координатами.
         """
         while True:
-            x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
-            y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
-            new_position = (x, y)
-            if new_position not in occupied_positions:
-                self.position = new_position
+            candidate = (
+                randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+                randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            )
+            if candidate not in occupied_positions:
+                self.position = candidate
                 break
 
     def draw(self):
@@ -114,7 +115,7 @@ class Snake(GameObject):
         super().__init__(body_color, border_color)
         self.direction = RIGHT
         self.next_direction = None
-        self.positions = [CENTER_POSITION]
+        self.positions = [self.position]
         self.length = 1
 
     def draw(self):
@@ -154,7 +155,7 @@ class Snake(GameObject):
         """
         self.direction = choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
-        self.positions = [CENTER_POSITION]
+        self.positions = [self.position]
         self.length = 1
 
     def get_head_position(self):
